@@ -19,9 +19,13 @@ func thoughtsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    http.HandleFunc("/", homePageHandler)
-    http.HandleFunc("/projects", projectsHandler)
-    http.HandleFunc("/thoughts", thoughtsHandler)
+    fs := http.FileServer(http.Dir("./web"))
+    http.Handle("/", fs)
+
+    // http.HandleFunc("/", homePageHandler)
+    // http.HandleFunc("/projects", projectsHandler)
+    // http.HandleFunc("/thoughts", thoughtsHandler)
+
     log.Printf("Server starting on port: 8080")
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
